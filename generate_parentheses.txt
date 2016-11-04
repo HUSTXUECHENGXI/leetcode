@@ -1,0 +1,56 @@
+//产生合法括号组合  递归的小应用 左边的元素永远多余右边
+
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        rec=vector<vector<string> >(n+1);  
+        vector<string> ret=generate(n);  
+          
+        return ret;  
+        
+    }
+     vector<vector<string> > rec;  
+  
+    vector<string> generate(int n)  
+    {  
+        if (!rec[n].empty()) return rec[n];  
+  
+        vector<string> ret;  
+        if ( n==0)   
+        { ret.push_back(string(""));  
+        return ret;  
+        }  
+        if ( n==1)   
+        {  
+            ret.push_back(string("()"));  
+            return ret;  
+        }     
+          
+        vector<string> in;  
+        vector<string> out;  
+        int i,j,k;  
+        string tmp;  
+        for( k=n-1;k>=0;k--)  
+        {  
+            in=generate(k);  
+            out=generate(n-1-k);  
+            for(i=0;i<in.size();i++)  
+            {  
+                for(j=0;j<out.size();j++)  
+                {  
+                    tmp.clear();  
+                    tmp.append(string("("));  
+                    tmp.append(in[i]);  
+                    tmp.append(string(")"));  
+                    tmp.append(out[j]);  
+                    ret.push_back(tmp);  
+                }  
+            }  
+        }  
+  
+          
+        rec[n]=ret;  
+        return ret;  
+    }  
+};
