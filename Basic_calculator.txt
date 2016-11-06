@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int calculate(string s) {
+        if(s.size()==0) return 0;
+      stack<int> nums,ops;
+      int res=0;//记录当前结果
+      int num=0;//读取到的操作数
+      int sign=1;//记录操作符
+      for(char c:s){
+         if(isdigit(c)){
+             num=num*10+c-'0';
+         }
+         else{//遇见符号
+             res+=num*sign;
+             num=0;
+             if(c=='+') sign=1;
+             if(c=='-') sign=-1;
+             if(c=='('){
+                 nums.push(res);
+                 ops.push(sign);
+                 res=0;//还原
+                 sign=1;
+             }
+             if(c==')'){
+                 res=res*ops.top()+nums.top();
+                 ops.pop();
+                 nums.pop();
+             }
+         }
+      }
+      res+=sign*num;
+      return res;
+        
+    }
+};

@@ -1,0 +1,54 @@
+//java 
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+ 
+        ListNode prev = head;    
+        ListNode p = head.next;
+ 
+        while(p != null){
+            if(p.val == prev.val){
+                prev.next = p.next;
+                p = p.next;
+                //no change prev
+            }else{
+                prev = p;
+                p = p.next; 
+            }
+        }
+ 
+        return head;
+    }
+}
+
+//cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        ListNode *root = NULL;
+        ListNode **ppNext = &root;
+        while(head) {
+            if(head->next == NULL || head->next->val != head->val) {
+                *ppNext = head;
+                ppNext = &(head->next);
+                head = head->next;
+            } else {
+                int val = head->val;
+                do {
+                    head = head->next;
+                } while(head != NULL && head->val == val);
+            }
+        }
+        *ppNext = NULL;
+        return root;
+    }
+};
